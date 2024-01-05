@@ -40,9 +40,40 @@ export default function CalorieTracker() {
     fetchData();
   }, []);
 
-  const handleSelectChange = (event) => {
-    setSelectedFood(event.target.value);
+  const handleSelectChange = async (event) => {
+    const selectedFoodLabel = event.target.value;
+    const YOUR_APP_ID = 'b73add09'; // Your Edamam Application ID
+    const YOUR_APP_KEY = '3ec7cd9d14297f9ae975692179b8a548'; // Your Edamam Application Key
+
+    try {
+      const nutrientOptions = {
+        method: 'POST',
+        url: 'https://api.edamam.com/api/food-database/v2/nutrients',
+        headers: {
+          'Content-Type': 'application/json',
+          'Edamam-App-Id': YOUR_APP_ID,
+          'Edamam-App-Key': YOUR_APP_KEY
+        },
+        data: {
+          ingredients: [
+            {
+              quantity: 1, // Adjust quantity as needed
+              measureURI: 'http://www.edamam.com/ontologies/edamam.owl#Measure_unit', // Change this to the appropriate measure
+              foodId: selectedFood.food.foodId
+            }
+          ]
+        }
+      };
+
+      const nutrientResponse = await axios.request(nutrientOptions);
+      console.log('Nutrient response:', nutrientResponse.data);
+      // Set state or handle nutrient data as needed
+
+    } catch (error) {
+      console.error('Error fetching nutrients:', error);
+    }
   };
+
 
   const handleAddItem = () => {
     setDropDownVis(true);
@@ -51,7 +82,8 @@ export default function CalorieTracker() {
 
   return (
     <div>
-      <Button
+      <p>{foodItems[2].nutrients.FAT}</p>
+      {/* <Button
         handleButtonClick={handleAddItem}
         text="Add a food item" />
       {dropDownVis && foodItems.length > 0 ? (
@@ -64,7 +96,7 @@ export default function CalorieTracker() {
       <p>Selected Food: {selectedFood.label}</p>
       {selectedFood && selectedFood.nutrients && selectedFood.nutrients.ENERC_KCAL !== undefined ? (
         <p>Cals: {selectedFood.nutrients.ENERC_KCAL}</p>
-      ) : null}    
-      </div>
+      ) : null} */}
+    </div>
   );
 }
