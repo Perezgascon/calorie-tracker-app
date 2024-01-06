@@ -7,8 +7,8 @@ const DropdownMenu = ({ foodItems, selectedFood, handleSelectChange }) => {
       <select id="foodDropdown" value={selectedFood} onChange={handleSelectChange}>
         <option value="">Select...</option>
         {foodItems.map((foodItem, index) => (
-          <option key={index} value={foodItem}>
-            {foodItem}
+          <option key={index} value={foodItem.label}>
+            {foodItem.label}
           </option>
         ))}
       </select>

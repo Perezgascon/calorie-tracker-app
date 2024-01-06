@@ -8,6 +8,7 @@ export default function CalorieTracker() {
   const [foodItems, setFoodItems] = useState([]);
   const [selectedFood, setSelectedFood] = useState('');
   const [dropDownVis, setDropDownVis] = useState(false);
+  const [nutritionalInfo, setNutritionalInfo] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,8 +29,10 @@ export default function CalorieTracker() {
 
         const response = await axios.request(options);
         if (response.data.hints && response.data.hints.length > 0) {
-          // Extracting food items from the response
-          const items = response.data.hints.map((hint) => hint.food.label);
+          const items = response.data.hints.map((hint) => ({
+            label: hint.food.label,
+            id: hint.food.foodId
+          }));
           setFoodItems(items);
         }
       } catch (error) {
@@ -40,15 +43,12 @@ export default function CalorieTracker() {
     fetchData();
   }, []);
 
-  const handleSelectChange = async (event) => {
-    const selectedFoodLabel = event.target.value;
-    const YOUR_APP_ID = 'b73add09'; // Your Edamam Application ID
-    const YOUR_APP_KEY = '3ec7cd9d14297f9ae975692179b8a548'; // Your Edamam Application Key
+  const fetchNutritionalData = async (foodId) => {
+    const YOUR_APP_ID = 'b73add09'; 
+    const YOUR_APP_KEY = '3ec7cd9d14297f9ae975692179b8a548'; 
 
     try {
-      const nutrientOptions = {
-        method: 'POST',
-        url: 'https://api.edamam.com/api/food-database/v2/nutrients',
+      const response = await axios.post('https://api.edamam.com/api/food-database/v2/nutrients', {
         headers: {
           'Content-Type': 'application/json',
           'Edamam-App-Id': YOUR_APP_ID,
@@ -57,46 +57,52 @@ export default function CalorieTracker() {
         data: {
           ingredients: [
             {
-              quantity: 1, // Adjust quantity as needed
-              measureURI: 'http://www.edamam.com/ontologies/edamam.owl#Measure_unit', // Change this to the appropriate measure
-              foodId: selectedFood.food.foodId
+              quantity: 1,
+              measureURI: 'http://www.edamam.com/ontologies/edamam.owl#Measure_unit',
+              foodId: foodId
             }
           ]
         }
-      };
+      });
 
-      const nutrientResponse = await axios.request(nutrientOptions);
-      console.log('Nutrient response:', nutrientResponse.data);
-      // Set state or handle nutrient data as needed
-
+      setNutritionalInfo(response.data);
     } catch (error) {
-      console.error('Error fetching nutrients:', error);
+      console.error('Error fetching nutritional data:', error);
     }
   };
 
+  const handleSelectChange = (event) => {
+    const selectedLabel = event.target.value;
+    const selected = foodItems.find(item => item.label === selectedLabel);
+    setSelectedFood(selected);
+    fetchNutritionalData(selected.id);
+  };
 
   const handleAddItem = () => {
     setDropDownVis(true);
-  }
-
+  };
 
   return (
     <div>
-      <p>{foodItems[2].nutrients.FAT}</p>
-      {/* <Button
+      <Button
         handleButtonClick={handleAddItem}
         text="Add a food item" />
-      {dropDownVis && foodItems.length > 0 ? (
+      {dropDownVis && foodItems.length > 0 && (
         <DropDown
           foodItems={foodItems}
-          selectedFood={selectedFood}
+          selectedFood={selectedFood.label} 
           handleSelectChange={handleSelectChange}
         />
-      ) : null}
-      <p>Selected Food: {selectedFood.label}</p>
-      {selectedFood && selectedFood.nutrients && selectedFood.nutrients.ENERC_KCAL !== undefined ? (
-        <p>Cals: {selectedFood.nutrients.ENERC_KCAL}</p>
-      ) : null} */}
+      )}
+      {selectedFood.label && <p>Selected Food: {selectedFood.label}</p>}
+      {nutritionalInfo && (
+        <div>
+          <h3>Nutritional Information:</h3>
+          {/* Example rendering of calories, modify as needed for other nutrients */}
+          <p>Calories: {nutritionalInfo.calories}</p>
+          {/* Render more nutritional data here */}
+        </div>
+      )}
     </div>
   );
 }
