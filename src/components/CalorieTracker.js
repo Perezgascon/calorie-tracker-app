@@ -44,27 +44,24 @@ export default function CalorieTracker() {
   }, []);
 
   const fetchNutritionalData = async (foodId) => {
-    const YOUR_APP_ID = 'b73add09'; 
-    const YOUR_APP_KEY = '3ec7cd9d14297f9ae975692179b8a548'; 
-
+    const YOUR_APP_ID = '95191704'; 
+    const YOUR_APP_KEY = '3b137337cd620ecc5511e486e2689ce1'; 
+  
     try {
-      const response = await axios.post('https://api.edamam.com/api/food-database/v2/nutrients', {
+      const response = await axios.post(`https://api.edamam.com/api/food-database/v2/nutrients?app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`, {
+        ingredients: [
+          {
+            quantity: 1,
+            measureURI: 'http://www.edamam.com/ontologies/edamam.owl#Measure_unit',
+            foodId: foodId
+          }
+        ]
+      }, {
         headers: {
-          'Content-Type': 'application/json',
-          'Edamam-App-Id': YOUR_APP_ID,
-          'Edamam-App-Key': YOUR_APP_KEY
-        },
-        data: {
-          ingredients: [
-            {
-              quantity: 1,
-              measureURI: 'http://www.edamam.com/ontologies/edamam.owl#Measure_unit',
-              foodId: foodId
-            }
-          ]
+          'Content-Type': 'application/json'
         }
       });
-
+  
       setNutritionalInfo(response.data);
     } catch (error) {
       console.error('Error fetching nutritional data:', error);
