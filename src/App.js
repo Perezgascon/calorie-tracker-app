@@ -4,11 +4,14 @@ import DropDown from './components/DropDown'
 
 import MacroComponent from './components/MacroComponent'
 
+import FoodNutrientsRequest from './components/FoodNutrientsRequest'
+
 export default function App() {
   return (
     <div>
-      <CalorieTracker />
+      {/* <CalorieTracker /> */}
       {/* <MacroComponent /> */}
+      <FoodNutrientsRequest />
     </div>
   )
 }
