@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './LoggedFoods.module.css'
 
-export default function LoggedFoods({ loggedFood }) {
+export default function LoggedFoods({ loggedFood, quantity }) {
     return (
         <div className={styles.mainContainer}>
             <h3>Logged Foods</h3>
@@ -9,7 +9,7 @@ export default function LoggedFoods({ loggedFood }) {
                 <ul>
                     {loggedFood.map((food, index) => (
                         <li key={index}>
-                            {food.name} - Calories: {food.calories} - Quantity: {food.quantity}
+                            {food.name} - Calories: {food.calories} - Quantity: {quantity}
                         </li>
                     ))}
                 </ul>

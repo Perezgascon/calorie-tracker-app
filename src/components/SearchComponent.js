@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ButtonSmall from './ButtonSmall';
 
-import styles from './SearchComponent.module.css'
+import styles from './SearchComponent.module.css';
 
 export default function SearchComponent({ setNutrientInfo }) {
     const [foodItems, setFoodItems] = useState([]);
@@ -35,6 +35,18 @@ export default function SearchComponent({ setNutrientInfo }) {
         fetchFoodItems();
     }, [searchTerm]);
 
+    useEffect(() => {
+        // Update the nutrient information whenever quantity changes
+        fetchData();
+    }, [quantity]); // Run this effect when quantity changes
+
+    useEffect(() => {
+        // Update the nutrient information when a food item is selected
+        if (selectedFood) {
+            fetchData();
+        }
+    }, [selectedFood]); // Run this effect when selectedFood changes
+
     const fetchData = async () => {
         if (!selectedFood) return;
 
@@ -60,8 +72,10 @@ export default function SearchComponent({ setNutrientInfo }) {
                 sugar: nutrients.SUGAR?.quantity || 'N/A',
                 name: foodItems.find(item => item.foodId === selectedFood)?.label || ''
             };
-            setNutrientInfoLocal(newNutrientInfo); // Update the nutrientInfo in SearchComponent
-            setNutrientInfo(newNutrientInfo); // Update the nutrientInfo in Diary
+            
+            // Update the nutrientInfo in SearchComponent and Diary
+            setNutrientInfoLocal(newNutrientInfo);
+            setNutrientInfo(newNutrientInfo);
         } catch (error) {
             console.error('Error fetching data: ', error);
             setNutrientInfoLocal({ calories: '', fat: '', sugar: '' });
@@ -73,26 +87,30 @@ export default function SearchComponent({ setNutrientInfo }) {
 
     return (
         <div className={styles.mainContainer}>
-            <input className={styles.inputField}
+            <input
+                className={styles.inputField}
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search for food..."
             />
-            <select className={styles.inputField}
+            <select
+                className={styles.inputField}
                 value={selectedFood}
-                onChange={(e) => setSelectedFood(e.target.value)}>
+                onChange={(e) => setSelectedFood(e.target.value)}
+            >
                 {foodItems.map((item, index) => (
-                    <option key={index} value={item.foodId}>{item.label}</option>
+                    <option key={index} value={item.foodId}>
+                        {item.label}
+                    </option>
                 ))}
             </select>
-            <input className={styles.inputField}
+            <input
+                className={styles.inputField}
                 type="number"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                placeholder="Search for food..."
+                onChange={(e) => setQuantity(Number(e.target.value))}
             />
-            <ButtonSmall handleButtonClick={fetchData} text={"Get Nutrients"} />
             <div>
                 <h2>Nutrient Information:</h2>
                 <p>Calories: {caloriesItem}</p>

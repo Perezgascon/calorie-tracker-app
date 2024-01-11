@@ -12,6 +12,7 @@ export default function Diary() {
     const [searchBarVis, setSearchBarVis] = useState(false);
     const [loggedFood, setLoggedFood] = useState([]);
     const [nutrientInfo, setNutrientInfo] = useState(null);
+    const [quantity, setQuantity] = useState(1); 
 
     const handleAddItem = () => {
         setSearchBarVis(!searchBarVis);
@@ -44,11 +45,11 @@ export default function Diary() {
                 <ButtonSmall handleButtonClick={handleAddItem} text="Add Food" />
                 {searchBarVis && (
                     <>
-                        <SearchComponent setNutrientInfo={setNutrientInfo} />
+                        <SearchComponent setNutrientInfo={setNutrientInfo} setQuantity={setQuantity} />
                         <ButtonSmall handleButtonClick={handleLogFood} text={"Log Food"} />
                     </>
                 )}
-                <LoggedFoods loggedFood={loggedFood} />
+                <LoggedFoods loggedFood={loggedFood} quantity={quantity}/>
                 <DailyTotals TotalCalories={TotalCalories} />
             </div>
             <Footer />

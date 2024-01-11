@@ -9,7 +9,11 @@
     padding: 30px;
     width: 75%;
     margin: auto;
+    list-style-type: none;
 }
+
+.loggedFoodContainer li {
+    list-style-type: none;}
 
 @media screen and (min-width: 375px) {}
 

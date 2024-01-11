@@ -7,4 +7,12 @@
     border: 2px solid #26577C;
     border-radius: 5px;
     margin: 10px 0;
+    width: 25%;
+}
+
+.numberField {
+    border: 2px solid #26577C;
+    border-radius: 5px;
+    margin: 10px 0;
+    width: 5%;
 }
