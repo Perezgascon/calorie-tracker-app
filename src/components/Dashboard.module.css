@@ -1,0 +1,66 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex: 1;
+  /* Allow the content to take the remaining vertical space */
+}
+
+.heroSection {
+  background-color: #F9E8D9;
+  border-radius: 10px;
+  border: 2px solid #F7B787;
+  padding: 10px;
+  margin: 10px 0;
+  /* Add some margin for spacing */
+}
+
+:root {
+  --hero-gap: 40px;
+  --hero-flex: 0.7;
+}
+
+
+
+
+
+@media screen and (min-width: 375px) {
+
+
+}
+@media screen and (min-width: 481px) {
+  :root {
+    --hero-gap: 100px; /* Change the gap size for greater screen sizes */
+  }
+    
+
+}
+@media screen and (min-width: 769px) {
+  :root {
+    --hero-gap: 300px; /* Change the gap size for greater screen sizes */
+    --hero-flex: 0.6;
+  }
+}
+
+
+@media screen and (min-width: 1025px) {
+  :root {
+    --hero-gap: 500px; /* Change the gap size for greater screen sizes */
+  }
+  
+}
+
+@media screen and (min-width: 1200px) {
+  :root {
+    --hero-gap: 800px; /* Change the gap size for greater screen sizes */
+  }
+  
+}

@@ -1,0 +1,29 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    position: relative;
+}
+
+.footerContainer {
+    border-radius: 2px;
+    background-color: #EBE4D1;
+    position: absolute;
+    bottom: 0;
+    height: 15%;
+    width: 100%;
+}
+
+@media screen and (min-width: 375px) {}
+
+@media screen and (min-width: 481px) {}
+
+@media screen and (min-width: 769px) {
+
+    .footerContainer {
+        height: 20%;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1025px) {}

@@ -1,0 +1,28 @@
+.mainContainer {
+    text-align: center;
+    width: 100%;
+}
+
+.loggedFoodContainer {
+    border-top: 1px dashed black;
+    border-bottom: 1px dashed black;
+    padding: 30px;
+    width: 75%;
+    margin: auto;
+}
+
+@media screen and (min-width: 375px) {}
+
+@media screen and (min-width: 481px) {}
+
+@media screen and (min-width: 769px) {
+    .loggedFoodContainer {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 1025px) {}
+
+@media screen and (min-width: 1200px) {
+  
+}
