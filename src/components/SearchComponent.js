@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ButtonSmall from './ButtonSmall';
 
 import styles from './SearchComponent.module.css';
 
@@ -72,14 +71,34 @@ export default function SearchComponent({ setNutrientInfo }) {
                 sugar: nutrients.SUGAR?.quantity || 'N/A',
                 name: foodItems.find(item => item.foodId === selectedFood)?.label || ''
             };
-            
-            // Update the nutrientInfo in SearchComponent and Diary
-            setNutrientInfoLocal(newNutrientInfo);
-            setNutrientInfo(newNutrientInfo);
+
+            // Use the functional form to ensure the correct state update
+            setNutrientInfoLocal(prevNutrientInfo => ({
+                ...prevNutrientInfo,
+                ...newNutrientInfo
+            }));
+
+            setNutrientInfo(prevNutrientInfo => ({
+                ...prevNutrientInfo,
+                ...newNutrientInfo
+            }));
         } catch (error) {
             console.error('Error fetching data: ', error);
-            setNutrientInfoLocal({ calories: '', fat: '', sugar: '' });
-            setNutrientInfo({ calories: '', fat: '', sugar: '' }); // Update the nutrientInfo in Diary in case of error
+
+            // Use the functional form for resetting state in case of an error
+            setNutrientInfoLocal(prevNutrientInfo => ({
+                ...prevNutrientInfo,
+                calories: '',
+                fat: '',
+                sugar: ''
+            }));
+
+            setNutrientInfo(prevNutrientInfo => ({
+                ...prevNutrientInfo,
+                calories: '',
+                fat: '',
+                sugar: ''
+            }));
         }
     };
 
