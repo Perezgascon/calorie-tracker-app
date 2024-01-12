@@ -1,16 +1,13 @@
-// Inside SearchComponent.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-import styles from './SearchComponent.module.css';
+import SearchComponentPresentational from './SearchComponentPresentational';
 
 export default function SearchComponent({ setNutrientInfo }) {
     const [foodItems, setFoodItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedFood, setSelectedFood] = useState('');
     const [quantity, setQuantity] = useState(1);
-    const [nutrientInfo, setNutrientInfoLocal] = useState({ calories: '' });
+    const [nutrientInfo, setNutrientInfoLocal] = useState({ calories: 0 });
 
     useEffect(() => {
         const fetchFoodItems = async () => {
@@ -30,21 +27,12 @@ export default function SearchComponent({ setNutrientInfo }) {
                 console.error('Error fetching food items:', error);
             }
         };
-
         fetchFoodItems();
     }, [searchTerm]);
 
     useEffect(() => {
-        // Update the nutrient information whenever quantity changes
         fetchData();
-    }, [quantity]); // Run this effect when quantity changes
-
-    useEffect(() => {
-        // Update the nutrient information when a food item is selected
-        if (selectedFood) {
-            fetchData();
-        }
-    }, [selectedFood]); // Run this effect when selectedFood changes
+    }, [selectedFood]);
 
     const fetchData = async () => {
         if (!selectedFood) return;
@@ -66,74 +54,40 @@ export default function SearchComponent({ setNutrientInfo }) {
             const result = await axios.post(`${apiUrl}?app_id=${appId}&app_key=${appKey}`, data);
             const nutrients = result.data.totalNutrients;
             const newNutrientInfo = {
-                calories: nutrients.ENERC_KCAL?.quantity || 'N/A',
-                fat: nutrients.FAT?.quantity || 'N/A',
-                sugar: nutrients.SUGAR?.quantity || 'N/A',
+                calories: nutrients.ENERC_KCAL?.quantity || 0,
                 name: foodItems.find(item => item.foodId === selectedFood)?.label || ''
             };
 
-            // Use the functional form to ensure the correct state update
-            setNutrientInfoLocal(prevNutrientInfo => ({
-                ...prevNutrientInfo,
-                ...newNutrientInfo
-            }));
-
-            setNutrientInfo(prevNutrientInfo => ({
-                ...prevNutrientInfo,
-                ...newNutrientInfo
-            }));
+            setNutrientInfoLocal(newNutrientInfo);
+            setNutrientInfo(newNutrientInfo);
         } catch (error) {
             console.error('Error fetching data: ', error);
-
-            // Use the functional form for resetting state in case of an error
             setNutrientInfoLocal(prevNutrientInfo => ({
                 ...prevNutrientInfo,
-                calories: '',
-                fat: '',
-                sugar: ''
+                calories: 0
             }));
-
             setNutrientInfo(prevNutrientInfo => ({
                 ...prevNutrientInfo,
-                calories: '',
-                fat: '',
-                sugar: ''
+                calories: 0
             }));
         }
     };
 
-    const caloriesItem = nutrientInfo.calories !== 'N/A' ? nutrientInfo.calories * quantity : 'N/A';
+    const calculateTotalCalories = () => nutrientInfo.calories * quantity;
 
     return (
-        <div className={styles.mainContainer}>
-            <input
-                className={styles.inputField}
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search for food..."
+        <div>
+            <SearchComponentPresentational
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                foodItems={foodItems}
+                selectedFood={selectedFood}
+                setSelectedFood={setSelectedFood}
+                quantity={quantity}
+                setQuantity={setQuantity}
+                nutrientInfo={nutrientInfo}
+                calculateTotalCalories={calculateTotalCalories}
             />
-            <select
-                className={styles.inputField}
-                value={selectedFood}
-                onChange={(e) => setSelectedFood(e.target.value)}
-            >
-                {foodItems.map((item, index) => (
-                    <option key={index} value={item.foodId}>
-                        {item.label}
-                    </option>
-                ))}
-            </select>
-            <input
-                className={styles.inputField}
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
-            />
-            <div>
-                <h2>Nutrient Information:</h2>
-                <p>Calories: {caloriesItem}</p>
-            </div>
         </div>
     );
 }
