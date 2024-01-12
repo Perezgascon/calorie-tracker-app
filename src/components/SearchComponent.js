@@ -54,10 +54,10 @@ export default function SearchComponent({ setNutrientInfo }) {
             const result = await axios.post(`${apiUrl}?app_id=${appId}&app_key=${appKey}`, data);
             const nutrients = result.data.totalNutrients;
             const newNutrientInfo = {
-                calories: nutrients.ENERC_KCAL?.quantity || 0,
-                carbs: nutrients.CHOCDF?.quantity || 0,
-                protein: nutrients.PROCNT?.quantity || 0,
-                fat: nutrients.FAT?.quantity || 0,
+                calories: parseFloat(nutrients.ENERC_KCAL?.quantity || 0).toFixed(2),
+                carbs: parseFloat(nutrients.CHOCDF?.quantity || 0).toFixed(2),
+                protein: parseFloat(nutrients.PROCNT?.quantity || 0).toFixed(2),
+                fat: parseFloat(nutrients.FAT?.quantity || 0).toFixed(2),
                 name: foodItems.find(item => item.foodId === selectedFood)?.label || ''
             };
 
@@ -78,10 +78,10 @@ export default function SearchComponent({ setNutrientInfo }) {
         }
     };
 
-    const calculateTotalCalories = () => nutrientInfo.calories * quantity;
-    const calculateTotalCarbs = () => nutrientInfo.carbs * quantity;
-    const calculateTotalProtein = () => nutrientInfo.protein * quantity;
-    const calculateTotalFat = () => nutrientInfo.fat * quantity;
+    const calculateTotalCalories = () => (nutrientInfo.calories * quantity).toFixed(2);
+    const calculateTotalCarbs = () => (nutrientInfo.carbs * quantity).toFixed(2);
+    const calculateTotalProtein = () => (nutrientInfo.protein * quantity).toFixed(2);
+    const calculateTotalFat = () => (nutrientInfo.fat * quantity).toFixed(2);
 
     return (
         <div>
