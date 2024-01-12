@@ -13,21 +13,23 @@ export default function Dashboard() {
     flex: `var(--hero-flex)`,
   };
 
-return (
-  <div className={styles.mainContainer}>
-    <Header />
-    <Button text={"Go Premium"} />
-    <Hero className={styles.heroSection} 
-    style={heroStyle}
-    Text1={"Graphic A"}
-    Text2={"Graphic B"}
-    Text3={"Graphic C"}
-    Text4={"Graphic D"}
-    Image1={macrosSampleImage}
-    Image2={macrosSampleImage}
-    Image3={macrosSampleImage}
-    Image4={macrosSampleImage}  />
-    <Footer className={styles.footer} />
-  </div>
-)
+  return (
+    <div className={styles.mainContainer}>
+      <Header />
+      <Button text={"Go Premium"} />
+      <Hero className={styles.heroSection}
+        style={heroStyle}
+        Text1={"Graphic A"}
+        Text2={"Graphic B"}
+        Text3={"Graphic C"}
+        Text4={"Graphic D"}
+        Image1={macrosSampleImage}
+        Image2={macrosSampleImage}
+        Image3={macrosSampleImage}
+        Image4={macrosSampleImage} />
+      <div className={styles.footer}>
+        <Footer />
+      </div>
+    </div>
+  )
 }

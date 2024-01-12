@@ -7,7 +7,7 @@ export default function SearchComponent({ setNutrientInfo }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedFood, setSelectedFood] = useState('');
     const [quantity, setQuantity] = useState(1);
-    const [nutrientInfo, setNutrientInfoLocal] = useState({ calories: 0 });
+    const [nutrientInfo, setNutrientInfoLocal] = useState({ calories: 0, carbs: 0, protein: 0, fat: 0 });
 
     useEffect(() => {
         const fetchFoodItems = async () => {
@@ -55,6 +55,9 @@ export default function SearchComponent({ setNutrientInfo }) {
             const nutrients = result.data.totalNutrients;
             const newNutrientInfo = {
                 calories: nutrients.ENERC_KCAL?.quantity || 0,
+                carbs: nutrients.CHOCDF?.quantity || 0,
+                protein: nutrients.PROCNT?.quantity || 0,
+                fat: nutrients.FAT?.quantity || 0,
                 name: foodItems.find(item => item.foodId === selectedFood)?.label || ''
             };
 
@@ -64,7 +67,9 @@ export default function SearchComponent({ setNutrientInfo }) {
             console.error('Error fetching data: ', error);
             setNutrientInfoLocal(prevNutrientInfo => ({
                 ...prevNutrientInfo,
-                calories: 0
+                calories: 0,
+                carbs: 0,
+                fat: 0
             }));
             setNutrientInfo(prevNutrientInfo => ({
                 ...prevNutrientInfo,
@@ -74,6 +79,9 @@ export default function SearchComponent({ setNutrientInfo }) {
     };
 
     const calculateTotalCalories = () => nutrientInfo.calories * quantity;
+    const calculateTotalCarbs = () => nutrientInfo.carbs * quantity;
+    const calculateTotalProtein = () => nutrientInfo.protein * quantity;
+    const calculateTotalFat = () => nutrientInfo.fat * quantity;
 
     return (
         <div>
@@ -87,6 +95,9 @@ export default function SearchComponent({ setNutrientInfo }) {
                 setQuantity={setQuantity}
                 nutrientInfo={nutrientInfo}
                 calculateTotalCalories={calculateTotalCalories}
+                calculateTotalCarbs={calculateTotalCarbs}
+                calculateTotalFat={calculateTotalFat}
+                calculateTotalProtein={calculateTotalProtein}
             />
         </div>
     );

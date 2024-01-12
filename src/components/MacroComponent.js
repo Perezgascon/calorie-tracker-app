@@ -9,11 +9,9 @@ import { Chart, ArcElement } from 'chart.js'
 Chart.register(ArcElement);
 
 
-
-
 const MacroComponent = () => {
   const dailyCarbs = 20
-  const dailyFats= 20
+  const dailyFats = 20
   const dailyProteins = 60
 
   const [chartData, setChartData] = useState({
@@ -37,7 +35,9 @@ const MacroComponent = () => {
           <Table />
         </div>
       </div>
-      <Footer />
+      <div className={styles.footer}>
+        <Footer />
+      </div>
     </div>
   );
 };

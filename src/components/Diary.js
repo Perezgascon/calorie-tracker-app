@@ -36,6 +36,18 @@ export default function Diary() {
         return accumulator + Number(currentObject.calories) * currentObject.quantity;
     }, 0);
 
+    const totalCarbs = loggedFood.reduce((accumulator, currentObject) => {
+        return accumulator + Number(currentObject.carbs) * currentObject.quantity;
+    }, 0);
+
+    const totalProtein = loggedFood.reduce((accumulator, currentObject) => {
+        return accumulator + Number(currentObject.protein) * currentObject.quantity;
+    }, 0);
+
+    const totalFat = loggedFood.reduce((accumulator, currentObject) => {
+        return accumulator + Number(currentObject.fat) * currentObject.quantity;
+    }, 0);
+
     return (
         <div className={styles.pageContainer}>
             <div className={styles.mainContainer}>
@@ -47,9 +59,17 @@ export default function Diary() {
                         <ButtonSmall handleButtonClick={() => handleLogFood(quantity)} text={"Log Food"} />
                     </>
                 )}
-                <LoggedFoodsAndDailyTotals loggedFood={loggedFood} quantity={quantity} totalCalories={totalCalories} />
+                <LoggedFoodsAndDailyTotals
+                    loggedFood={loggedFood}
+                    quantity={quantity}
+                    totalCalories={totalCalories}
+                    totalCarbs={totalCarbs}
+                    totalProtein={totalProtein}
+                    totalFat={totalFat} />
             </div>
-            <Footer />
+            <div className={styles.footer}>
+                <Footer />
+            </div>
         </div>
     );
 }

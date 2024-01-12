@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './SearchComponent.module.css';
+import styles from './SearchComponentPresentational.module.css';
 
 
 export default function SearchComponentPresentational({
@@ -11,7 +11,10 @@ export default function SearchComponentPresentational({
     setSearchTerm,
     setSelectedFood,
     setQuantity,
-    calculateTotalCalories
+    calculateTotalCalories,
+    calculateTotalCarbs,
+    calculateTotalProtein,
+    calculateTotalFat
 }) {
     return (
         <div>
@@ -40,10 +43,14 @@ export default function SearchComponentPresentational({
                     value={quantity}
                     onChange={(e) => setQuantity(Number(e.target.value))}
                 />
-                <div>
+                <div className={styles.nutrientInfoContainer}>
                     <h2>Nutrient Information:</h2>
-                    <p>Calories: {calculateTotalCalories()}</p>
+                    <p><strong>Calories</strong>: {calculateTotalCalories()}</p>
+                    <p><strong>Carbs</strong>: {calculateTotalCarbs()}</p>
+                    <p><strong>Protein</strong>: {calculateTotalProtein()}</p>
+                    <p><strong>Fat</strong>: {calculateTotalFat()}</p>
                 </div>
-            </div></div>
+            </div>
+        </div>
     )
 }

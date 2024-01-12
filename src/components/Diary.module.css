@@ -1,13 +1,19 @@
+.pageContainer {
+    height: 175vh;
+    margin: 0;
+    position: relative;
+}
+
 .mainContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
+    margin-top: 10px;
+    text-align: center;
 }
 
-.mainContainer {
-    flex: 1;
-    margin-top: 10px;
-    margin-bottom: 200px;
-    position: relative;
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }

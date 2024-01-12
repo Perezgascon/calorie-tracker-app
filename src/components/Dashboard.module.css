@@ -28,7 +28,11 @@
   --hero-flex: 0.7;
 }
 
-
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 
 
 
