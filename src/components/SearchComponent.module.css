@@ -10,9 +10,9 @@
     width: 25%;
 }
 
-.numberField {
+.quantityField {
     border: 2px solid #26577C;
     border-radius: 5px;
     margin: 10px 0;
-    width: 5%;
+    width: 10%;
 }

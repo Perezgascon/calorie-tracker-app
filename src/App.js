@@ -21,6 +21,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/diary" element={<Diary />} />
+      <Route path="/macros" element={<MacroComponent />} />
     </Routes>
   </BrowserRouter>
 );

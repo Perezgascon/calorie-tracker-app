@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './LoggedFoods.module.css'
+import styles from './LoggedFoodsAndDailyTotals.module.css'
 
-export default function LoggedFoods({ loggedFood, quantity }) {
+export default function LoggedFoodsAndDailyTotals ({ loggedFood, quantity, totalCalories }) {
     return (
         <div className={styles.mainContainer}>
             <h3>Logged Foods</h3>
@@ -14,6 +14,7 @@ export default function LoggedFoods({ loggedFood, quantity }) {
                     ))}
                 </ul>
             </div>
+            <h3>Total Cals: {totalCalories}</h3>
         </div>
     )
 }

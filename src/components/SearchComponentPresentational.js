@@ -35,7 +35,7 @@ export default function SearchComponentPresentational({
                     ))}
                 </select>
                 <input
-                    className={styles.inputField}
+                    className={styles.quantityField}
                     type="number"
                     value={quantity}
                     onChange={(e) => setQuantity(Number(e.target.value))}

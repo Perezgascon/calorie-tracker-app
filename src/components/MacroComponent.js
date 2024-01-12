@@ -1,45 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import Table from './Table';
+import { Doughnut } from 'react-chartjs-2';
+import Footer from './Footer'
+
+import styles from './MacroComponent.module.css';
+
+import { Chart, ArcElement } from 'chart.js'
+Chart.register(ArcElement);
+
+
+
 
 const MacroComponent = () => {
- const [macros, setMacros] = useState({});
- const [search, setSearch] = useState('');
- const [query, setQuery] = useState('chicken');
+  const dailyCarbs = 20
+  const dailyFats= 20
+  const dailyProteins = 60
 
- const getMacros = async () => {
-   const APP_ID = '26f8809f';
-   const APP_KEY = '75c12f4b3a8702f8d588ead069857260';
-   const response = await axios.get(`https://api.edamam.com/api/food-database/v2/nutrients?ingr=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`);
-   setMacros(response.data);
- };
+  const [chartData, setChartData] = useState({
+    labels: ['Carbohydrates', 'Fat', 'Protein'],
+    datasets: [
+      {
+        data: [dailyCarbs, dailyProteins, dailyFats], // Initial values, you can modify these as needed
+        backgroundColor: ['#3498db', '#f39c12', '#e74c3c'], // Customize colors as needed
+      },
+    ],
+  });
 
- useEffect(() => {
-   getMacros();
- }, [query]);
-
- const handleSearch = (e) => {
-   setSearch(e.target.value);
- };
-
- const handleSubmit = (e) => {
-   e.preventDefault();
-   setQuery(search);
-   setSearch('');
- };
-
- return (
-   <div>
-     <form onSubmit={handleSubmit}>
-       <input type="text" value={search} onChange={handleSearch} />
-       <button type="submit">Search</button>
-     </form>
-     <h2>Macros for {query}</h2>
-     <p>Calories: {macros.calories}</p>
-     <p>Protein: {macros.protein}</p>
-     <p>Fat: {macros.fat}</p>
-     <p>Carbohydrates: {macros.carbs}</p>
-   </div>
- );
+  return (
+    <div>
+      <div className={styles.mainContainer}>
+        <h1>Your Daily Macros</h1>
+        <div className={styles.pieChart}>
+          <Doughnut data={chartData} />
+        </div>
+        <div className={styles.table}>
+          <Table />
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default MacroComponent;
