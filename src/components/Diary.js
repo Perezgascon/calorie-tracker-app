@@ -1,4 +1,3 @@
-// Diary.js
 import React, { useState } from 'react';
 import ButtonSmall from './ButtonSmall';
 import HeadingDiary from './HeadingDiary';
@@ -8,7 +7,7 @@ import Footer from './Footer';
 
 import styles from './Diary.module.css';
 
-export default function Diary() {
+export default function Diary( ) {
     const [searchBarVis, setSearchBarVis] = useState(false);
     const [loggedFood, setLoggedFood] = useState([]);
     const [nutrientInfo, setNutrientInfo] = useState(null);
@@ -47,6 +46,7 @@ export default function Diary() {
     const totalFat = loggedFood.reduce((accumulator, currentObject) => {
         return accumulator + Number(currentObject.fat) * currentObject.quantity;
     }, 0);
+
 
     return (
         <div className={styles.pageContainer}>

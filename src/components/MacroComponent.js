@@ -9,7 +9,7 @@ import { Chart, ArcElement } from 'chart.js'
 Chart.register(ArcElement);
 
 
-const MacroComponent = () => {
+const MacroComponent = ({ totalCarbs, totalProtein, totalFat }) => {
   const dailyCarbs = 20
   const dailyFats = 20
   const dailyProteins = 60
