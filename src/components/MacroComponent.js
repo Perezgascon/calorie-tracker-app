@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
+// MacroComponent.js
+import React from 'react';
+import { useDiaryContext } from './DiaryContext';
 import Table from './Table';
 import { Doughnut } from 'react-chartjs-2';
-import Footer from './Footer'
+import Footer from './Footer';
 
 import styles from './MacroComponent.module.css';
 
 import { Chart, ArcElement } from 'chart.js'
 Chart.register(ArcElement);
 
+const MacroComponent = () => {
+  const { totalCarbs, totalProtein, totalFat } = useDiaryContext();
+  const totalCalories = totalCarbs * 4 + totalProtein * 4 + totalFat * 9;
 
-const MacroComponent = ({ totalCarbs, totalProtein, totalFat }) => {
-  const dailyCarbs = 20
-  const dailyFats = 20
-  const dailyProteins = 60
+  // Calculate percentages
+  const carbPercentage = (totalCarbs * 4 / totalCalories) * 100;
+  const proteinPercentage = (totalProtein * 4 / totalCalories) * 100;
+  const fatPercentage = (totalFat * 9 / totalCalories) * 100;
 
-  const [chartData, setChartData] = useState({
+  const chartData = {
     labels: ['Carbohydrates', 'Fat', 'Protein'],
     datasets: [
       {
-        data: [dailyCarbs, dailyProteins, dailyFats], // Initial values, you can modify these as needed
+        data: [carbPercentage, proteinPercentage, fatPercentage], // Initial values, you can modify these as needed
         backgroundColor: ['#3498db', '#f39c12', '#e74c3c'], // Customize colors as needed
       },
     ],
-  });
+  };
 
   return (
     <div>
@@ -32,7 +37,10 @@ const MacroComponent = ({ totalCarbs, totalProtein, totalFat }) => {
           <Doughnut data={chartData} />
         </div>
         <div className={styles.table}>
-          <Table />
+          <Table
+            totalCarbs={totalCarbs}
+            totalProtein={totalProtein}
+            totalFat={totalFat} />
         </div>
       </div>
       <div className={styles.footer}>

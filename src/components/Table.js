@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Table.module.css'
 
-export default function Table() {
+export default function Table( { totalCarbs, totalFat, totalProtein}) {
   return (
     <div><div>
     <table className={styles.table}>
@@ -15,23 +15,23 @@ export default function Table() {
       <tbody>
         <tr>
           <td>
-            <div className={`${styles.squareIcon} ${styles.blueSquare}`}></div> Carbohydrates (<span></span>g)
+            <div className={`${styles.squareIcon} ${styles.blueSquare}`}></div> Carbs (g)
           </td>
-          <td></td>
+          <td> {totalCarbs} </td>
           <td></td>
         </tr>
         <tr>
           <td>
-            <div className={`${styles.squareIcon} ${styles.orangeSquare}`}></div> Fat (<span></span>g)
+            <div className={`${styles.squareIcon} ${styles.orangeSquare}`}></div> Fat (g)
           </td>
-          <td></td>
+          <td>{totalFat}</td>
           <td></td>
         </tr>
         <tr>
           <td>
-            <div className={`${styles.squareIcon} ${styles.redSquare}`}></div> Protein (<span></span>g)
+            <div className={`${styles.squareIcon} ${styles.redSquare}`}></div> Protein (g)
           </td>
-          <td></td>
+          <td>{totalProtein}</td>
           <td></td>
         </tr>
       </tbody>
