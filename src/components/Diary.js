@@ -27,6 +27,7 @@ export default function Diary() {
         ...nutrientInfo,
         quantity: logQuantity,
       };
+      console.log("quantity", logQuantity)
 
       setLoggedFood((prevLoggedFood) => [...prevLoggedFood, loggedFoodItem]);
       setNutrientInfo(null); // Reset nutrientInfo after logging

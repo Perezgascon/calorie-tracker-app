@@ -79,15 +79,18 @@ export default function BmiCalculator() {
             <Button handleButtonClick={calcBmi} text={"Calculate"} />
             {bmiVis && (
                 <>
-                    <p>Your BMI is: {bmi}</p>
-                    {/* Add logic to determine and display BMI category */}
-                    <p>You are {bmiCategory}</p>
+                    <div className={styles.responseContainer}>
+                        <h3>Your BMI is {bmi}</h3>
+                        {/* Add logic to determine and display BMI category */}
+                        <h3>You are {bmiCategory}</h3>
+                    </div>
                 </>
 
-            )}
+            )
+            }
             <div className={styles.footer}>
                 <Footer />
             </div>
-        </div>
+        </div >
     );
 }
